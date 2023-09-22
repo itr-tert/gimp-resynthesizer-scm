@@ -65,3 +65,4 @@ stamp-h1
 
 # ignore separate build directory 
 /build
+/packaging

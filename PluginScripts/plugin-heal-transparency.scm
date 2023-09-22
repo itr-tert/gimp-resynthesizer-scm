@@ -44,7 +44,7 @@
 
     ;; save selection for later restoration.
     ;; Saving selection channel makes it active, so we must save and restore the active layer
-    (set! org-selection (gimp-selection-save timg))
+    (set! org-selection (car (gimp-selection-save timg)))
     (gimp-image-set-active-layer timg tdrawable)
 
     ;; alpha to selection
