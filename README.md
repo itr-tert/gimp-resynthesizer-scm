@@ -1,13 +1,18 @@
-# GIMP Resynthesizer without Python
+# Resynthesizer without Python (for Gimp version 2)
 ## about scm version
 [see wiki/README](https://github.com/itr-tert/gimp-resynthesizer-scm/wiki/README)
 
 ## Installation
-[Wiki:Download and Install: GIMP resynthesizer scm](https://github.com/itr-tert/gimp-resynthesizer-scm/wiki/Download-and-Install:-GIMP-resynthesizer-scm)
+[Wiki:Download and Install: Gimp resynthesizer scm](https://github.com/itr-tert/gimp-resynthesizer-scm/wiki/Download-and-Install:-GIMP-resynthesizer-scm)
 
 [Download: .zip file for Windows](https://github.com/itr-tert/gimp-resynthesizer-scm-download/raw/main/gimp-resynthesizer-scm-win.zip)
 
 [Download: .deb for amd64 Debian/Ubuntu, GNU/Linux](https://github.com/itr-tert/gimp-resynthesizer-scm-download/raw/main/gimp-resynthesizer-scm.deb)
+
+## Gimp 2 and Gimp 3
+This plugin does not work with Gimp 3.  
+(2023-10-01): If you want Resynthesizer for Gimp 3, see the working branch of bootchk/resynthesizer repository.  
+[https://github.com/bootchk/resynthesizer/tree/resynthesizer3](https://github.com/bootchk/resynthesizer/tree/resynthesizer3)  
 
 ----
 
