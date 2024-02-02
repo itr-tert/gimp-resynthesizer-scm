@@ -1,16 +1,35 @@
 # Resynthesizer without Python (for Gimp version 2)
-## about scm version
-[see wiki/README](https://github.com/itr-tert/gimp-resynthesizer-scm/wiki/README)
+
+resynthesizer-scm is a gimp plugin that rewrites the python2 code of bootchk/resynthesizer using script-fu(tinyscheme). Like bootchk/resynthesizer, scm version provides functions such as 'heal selection'. [see wiki/README](https://github.com/itr-tert/gimp-resynthesizer-scm/wiki/README)
 
 ## Installation
-[Wiki:Download and Install: Gimp resynthesizer scm](https://github.com/itr-tert/gimp-resynthesizer-scm/wiki/Download-and-Install:-GIMP-resynthesizer-scm)
 
+### Linux
+[Download: .deb for amd64-CPU Debian・Ubuntu, GNU/Linux](https://github.com/itr-tert/gimp-resynthesizer-scm-download/raw/main/gimp-resynthesizer-scm.deb)  
+```
+# install depends
+sudo apt install libx11-6 libxau6 libxcomposite1 libatk1.0-0 libbabl-0.1-0 libblkid1 libbrotli1 libbsd0 libc6 libcairo2 libdatrie1 libexiv2-27 libexpat1 libffi8 libfontconfig1 libfreetype6 libfribidi0 libgcc-s1 libgdk-pixbuf-2.0-0 libgegl-0.4-0 libgexiv2-2 libgimp2.0 libglib2.0-0 libgraphite2-3 libgtk2.0-0 libgtk3-nocsd0 libharfbuzz0b libjpeg-turbo8 liblcms2-2 libmd0 libmount1 libpango-1.0-0 libpangocairo-1.0-0 libpangoft2-1.0-0 libpcre2-8-0 libpcre3 libpixman-1-0 libpng16-16 libselinux1 libthai0 libuuid1 libxcb-render0 libxcb-shm0 libxcb1 libxcursor1 libxdamage1 libxdmcp6 libxext6 libxfixes3 libxi6 libxinerama1 libxrandr2 libxrender1 zlib1g
+# download
+wget https://github.com/itr-tert/gimp-resynthesizer-scm-download/raw/main/gimp-resynthesizer-scm.deb
+# install
+sudo dpkg -i gimp-resynthesizer-scm.deb
+```
+
+### Build from source
+```
+git clone https://github.com/itr-tert/gimp-resynthesizer-scm.git --depth 1
+cd gimp-resynthesizer-scm
+./autogen.sh --prefix=/usr/local && make && sudo make install
+```
+
+### Windows
 [Download: .zip file for Windows](https://github.com/itr-tert/gimp-resynthesizer-scm-download/raw/main/gimp-resynthesizer-scm-win.zip)
 
-[Download: .deb for amd64 Debian/Ubuntu, GNU/Linux](https://github.com/itr-tert/gimp-resynthesizer-scm-download/raw/main/gimp-resynthesizer-scm.deb)
+[Wiki: Download and Install for Windows: Gimp resynthesizer scm](https://github.com/itr-tert/gimp-resynthesizer-scm/wiki/Download-and-Install:-GIMP-resynthesizer-scm)
 
-## Gimp 2 and Gimp 3
-This plugin does not work with Gimp 3.  
+
+## Gimp 3
+resynthesizer-scm does not work with Gimp 3.  
 (2023-10-01): If you want Resynthesizer for Gimp 3, see the working branch of bootchk/resynthesizer repository.  
 [https://github.com/bootchk/resynthesizer/tree/resynthesizer3](https://github.com/bootchk/resynthesizer/tree/resynthesizer3)  
 
@@ -42,7 +61,7 @@ The plugins do _not_ come with GIMP, they are "third-party" plugins.
 
 More topics are in the [Resynthesizer wiki](https://github.com/bootchk/resynthesizer/wiki)
 
-## Installation
+## Installation(python2 version)
 
 [install flatpaked Resynthesizer for Linux](https://github.com/bootchk/resynthesizer/wiki/Install-Resynthesizer#flatpak)
 
