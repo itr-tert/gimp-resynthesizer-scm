@@ -58,6 +58,16 @@
      )))
 
 
+(define-with-return (error-when-plug-in-resynthesizer-is-not-defined)
+  (unless (defined? 'plug-in-resynthesizer)
+    (gimp-message-set-handler MESSAGE-BOX)
+    (gimp-message (SG_"Error: Executable file 'resynthesizer' is not installed, cannot run, or is not recognized by gimp."))
+    ;; As of GIMP 2.10.34, changing the handler after displaying a message causes strange behavior.
+    (return #t)
+    )
+  (return #f))
+
+
 (define (get-image)
   (vector-ref (car (cdr (gimp-image-list))) 0))
 
@@ -161,10 +171,13 @@
   ;; Create frisket stencil selection in a temp image to pass as source (corpus) to plugin resynthesizer,
   ;; which does the substantive work.
 
+  (when (error-when-plug-in-resynthesizer-is-not-defined)
+    (return nil))
+
   (gimp-message-set-handler MESSAGE-BOX)
   (when (<> TRUE (car (gimp-item-is-layer drawable)))
     (gimp-message (G_"A layer must be active, not a channel."))
-    (return))
+    (return nil))
 
   (gimp-image-undo-group-start orgImage)
 

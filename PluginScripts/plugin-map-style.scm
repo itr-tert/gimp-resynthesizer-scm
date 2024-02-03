@@ -127,6 +127,16 @@
            (gimp-displays-flush))))
 
 
+(define-with-return (error-when-plug-in-resynthesizer-is-not-defined)
+  (unless (defined? 'plug-in-resynthesizer)
+    (gimp-message-set-handler MESSAGE-BOX)
+    (gimp-message (SG_"Error: Executable file 'resynthesizer' is not installed, cannot run, or is not recognized by gimp."))
+    ;; As of GIMP 2.10.34, changing the handler after displaying a message causes strange behavior.
+    (return #t)
+    )
+  (return #f))
+
+
 (define-with-return (make-grayscale-map image drawable)
   ;; Make a grayscale copy for a map.
   ;; Maps must be same size as their parent image.
@@ -245,6 +255,9 @@
   ;;
   ;; !!! Note map-mode is type string, "if map-mode:" will not work.
 
+  (when (error-when-plug-in-resynthesizer-is-not-defined)
+    (return nil))
+
   (gimp-image-undo-group-start image)
   (gimp-message-set-handler MESSAGE-BOX)
 
@@ -270,7 +283,7 @@
          )
     (when (= INDEXED original-source-base-type)
       (gimp-message (G_"The style source cannot be of mode INDEXED"))
-      (return))
+      (return nil))
 
     (if (and (= image source-image)
              (= drawable source-drawable))

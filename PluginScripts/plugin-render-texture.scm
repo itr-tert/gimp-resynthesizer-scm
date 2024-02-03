@@ -77,6 +77,16 @@
     (script-fu-render-texture image drawable 2 TRUE)))
 
 
+(define-with-return (error-when-plug-in-resynthesizer-is-not-defined)
+  (unless (defined? 'plug-in-resynthesizer)
+    (gimp-message-set-handler MESSAGE-BOX)
+    (gimp-message (SG_"Error: Executable file 'resynthesizer' is not installed, cannot run, or is not recognized by gimp."))
+    ;; As of GIMP 2.10.34, changing the handler after displaying a message causes strange behavior.
+    (return #t)
+    )
+  (return #f))
+
+
 (define (new-resized-image image resize-ratio)
   ;; Create new image resized by a ratio from *selection* in the old image
   (let* ((bounds       (gimp-selection-bounds image))
@@ -134,6 +144,9 @@
   ;; A selection in the source image is optional.
   ;; If there is no selection, the resynthesizer will use the entire source image.
   ;;
+
+  (when (error-when-plug-in-resynthesizer-is-not-defined)
+    (return nil))
 
   ;; Its all or nothing, user must delete new image if not happy.
   (gimp-image-undo-disable image)

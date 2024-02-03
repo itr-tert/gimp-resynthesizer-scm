@@ -31,14 +31,28 @@
 (define (SG_ m) (S_ (G_ m)))
 
 
+(define-with-return (error-when-plug-in-resynthesizer-is-not-defined)
+  (unless (defined? 'plug-in-resynthesizer)
+    (gimp-message-set-handler MESSAGE-BOX)
+    (gimp-message (SG_"Error: Executable file 'resynthesizer' is not installed, cannot run, or is not recognized by gimp."))
+    ;; As of GIMP 2.10.34, changing the handler after displaying a message causes strange behavior.
+    (return #t)
+    )
+  (return #f))
+
+
 (define-with-return
   (script-fu-heal-transparency
    timg tdrawable samplingRadiusParam orderParam)
+
+  (when (error-when-plug-in-resynthesizer-is-not-defined)
+    (return nil))
+
   (let ((org-selection nil))
     ;; precondition should be enforced by Gimp according to image modes allowed.
     (when (= FALSE (car (gimp-drawable-has-alpha tdrawable)))
       (gimp-message (G_"The active layer has no alpha channel to heal."))
-      (return))
+      (return nil))
 
     (gimp-image-undo-group-start timg)
 

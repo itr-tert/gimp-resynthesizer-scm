@@ -38,6 +38,16 @@
 (define (SG_ m) (S_ (G_ m)))
 
 
+(define-with-return (error-when-plug-in-resynthesizer-is-not-defined)
+  (unless (defined? 'plug-in-resynthesizer)
+    (gimp-message-set-handler MESSAGE-BOX)
+    (gimp-message (SG_"Error: Executable file 'resynthesizer' is not installed, cannot run, or is not recognized by gimp."))
+    ;; As of GIMP 2.10.34, changing the handler after displaying a message causes strange behavior.
+    (return #t)
+    )
+  (return #f))
+
+
 (define (layer-from-pattern image pattern)
   ;; Create a new image and layer having the same size as a pattern.
   (let* ((new-basetype (car (gimp-image-base-type image)))  ; same as source
@@ -90,6 +100,9 @@
 
   ;; User_friendly: if no selection, use entire image.
   ;; But the resynthesizer does that for us.
+
+  (when (error-when-plug-in-resynthesizer-is-not-defined)
+    (return nil))
 
   ;; Save/restore the context since we change the pattern
   (gimp-message-set-handler MESSAGE-BOX)

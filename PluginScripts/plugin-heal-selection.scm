@@ -50,11 +50,24 @@
      )))
 
 
+(define-with-return (error-when-plug-in-resynthesizer-is-not-defined)
+  (unless (defined? 'plug-in-resynthesizer)
+    (gimp-message-set-handler MESSAGE-BOX)
+    (gimp-message (SG_"Error: Executable file 'resynthesizer' is not installed, cannot run, or is not recognized by gimp."))
+    ;; As of GIMP 2.10.34, changing the handler after displaying a message causes strange behavior.
+    (return #t)
+    )
+  (return #f))
+
+
 (define-with-return
   (script-fu-heal-selection
    timg tdrawable samplingRadiusParam directionParam orderParam)
   "Create stencil selection in a temp image to pass as source (corpus) to plugin resynthesizer,
      which does the substantive work."
+
+  (when (error-when-plug-in-resynthesizer-is-not-defined)
+    (return nil))
 
   (let ((targetBounds nil)
 	(tempImage nil)
@@ -82,7 +95,7 @@
 
     (when (= TRUE (car (gimp-selection-is-empty timg)))
       (gimp-message (G_ "You must first select a region to heal."))
-      (return))
+      (return nil))
 
     (gimp-image-undo-group-start timg)
 

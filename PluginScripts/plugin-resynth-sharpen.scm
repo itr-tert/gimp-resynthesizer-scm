@@ -33,6 +33,16 @@
 (define (SG_ m) (S_ (G_ m)))
 
 
+(define-with-return (error-when-plug-in-resynthesizer-is-not-defined)
+  (unless (defined? 'plug-in-resynthesizer)
+    (gimp-message-set-handler MESSAGE-BOX)
+    (gimp-message (SG_"Error: Executable file 'resynthesizer' is not installed, cannot run, or is not recognized by gimp."))
+    ;; As of GIMP 2.10.34, changing the handler after displaying a message causes strange behavior.
+    (return #t)
+    )
+  (return #f))
+
+
 (define-with-return
   (script-fu-sharpen-resynthesized image drawable scale-factor)
 
@@ -47,6 +57,9 @@
 
   (gimp-message-set-handler MESSAGE-BOX)
 
+  (when (error-when-plug-in-resynthesizer-is-not-defined)
+    (return nil))
+
   (let ((temp-image1 nil)
         (temp-image2 nil)
         (temp-layer1 nil)
@@ -60,14 +73,14 @@
     (when (or (null? temp-image1)
               (null? temp-image2))
       (gimp-message "Failed duplicate image")
-      (return))
+      (return nil))
 
     (set! temp-layer1 (car (gimp-image-get-active-layer temp-image1)))
     (set! temp-layer2 (car (gimp-image-get-active-layer temp-image2)))
     (when (or (null? temp-layer1)
               (null? temp-layer2))
       (gimp-message "Failed get active layer")
-      (return))
+      (return nil))
 
     (set! width  (car (gimp-drawable-width  drawable)))
     (set! height (car (gimp-drawable-height drawable)))
